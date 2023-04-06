@@ -1,0 +1,23 @@
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+    width: 20rem;
+    border:none;
+    background-color: #E84236;
+    color: white;
+    font-size: large;
+    cursor: pointer;
+    
+}
+
+.icon {
+    margin-right: 5px;
+    height: 32px;
+}
+
+.btn:hover{
+    background-color: #d33b30;
+    transition: all 0.2s ease;
+}
