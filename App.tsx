@@ -12,9 +12,9 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='SingIn'>
-        <Stack.Screen name="SingIn" component={SingIn} />
-        <Stack.Screen name="BottomNav" component={BottomNav} />
+      <Stack.Navigator initialRouteName='SingIn' >
+        <Stack.Screen name="SingIn" options={{headerShown:false}} component={SingIn} />
+        <Stack.Screen name="BottomNav" options={{headerShown:false}} component={BottomNav} />
       </Stack.Navigator>
     </NavigationContainer>
 

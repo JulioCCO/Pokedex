@@ -1,5 +1,6 @@
 {
   "expo": {
+    "owner": "juliocco93",
     "name": "Pokedex-Mobile",
     "slug": "Pokedex-Mobile",
     "version": "1.0.0",
@@ -27,6 +28,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "1d9a4eb0-2271-4215-8b50-af622a72bb74"
+      }
     }
   }
 }
