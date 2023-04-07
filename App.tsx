@@ -1,13 +1,23 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler';
+import { createStackNavigator } from '@react-navigation/stack';
+
+
+import { StyleSheet } from 'react-native';
 import { BottomNav } from './components/BottomNav/BottomNav';
+import { SingIn } from './components/SingIn/SingIn';
+import { NavigationContainer } from '@react-navigation/native';
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <BottomNav/>
+      <Stack.Navigator initialRouteName='SingIn'>
+        <Stack.Screen name="SingIn" component={SingIn} />
+        <Stack.Screen name="BottomNav" component={BottomNav} />
+      </Stack.Navigator>
     </NavigationContainer>
+
   );
 }
 
