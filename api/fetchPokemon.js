@@ -8,24 +8,20 @@ export async function fetchPokemon(pokeName) {
 
     }
     const results = await response.json();
+    
     const moveslist = [];
-
-    // results.moves.map(async (move) => {
-    //     const resp = await fetchMoves(move.move.url);
-    //     moveslist.push({
-    //         name: resp.name,
-    //         accuracy: resp.accuracy,
-    //         power: resp.power,
-    //         pp: resp.pp,
-    //     });
-    // })
 
     const pokeInfo = {
         name: results.name,
+        id: results.id,
+        weight: results.weight,
         abilities: results.abilities,
-        moves: moveslist,
+        moves: results.moves,
         types: results.types,
+        stats: results.stats,
         sprites: results.sprites,
+        official: results.sprites.other["official-artwork"].front_default,
+        officialShiny: results.sprites.other["official-artwork"].front_shiny
     };
     return pokeInfo;
 
