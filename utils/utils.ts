@@ -46,3 +46,7 @@ export function color(type: string) {
 export function waitFor(time: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, time));
 }
+
+export function capitalizeFirstLetter(string:string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}

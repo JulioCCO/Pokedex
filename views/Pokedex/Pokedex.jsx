@@ -5,7 +5,7 @@ import  {GetPokemons}  from '../../components/GetPokemons/GetPokemons'
 
 export const Pokedex = () => {
   return (
-    <View className="flex-1 items-center justify-center bg-sky-400">
+    <View className="flex-1 items-center justify-center bg-slate-600">
       <GetPokemons/> 
     </View>
   )

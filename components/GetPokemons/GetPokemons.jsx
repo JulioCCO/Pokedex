@@ -6,7 +6,7 @@ import { Card } from '../../components/Card/Card';
 import { LoadingScreen } from '../../components/LoadingScreen/LoadingScreen';
 import { waitFor } from '../../utils/utils';
 import { FlatList } from 'react-native-gesture-handler';
-import { SafeAreaView } from 'react-native';
+import { ActivityIndicator, SafeAreaView } from 'react-native';
 
 export const GetPokemons = () => {
 
@@ -14,10 +14,11 @@ export const GetPokemons = () => {
     const [pokemons, setPokemons] = useState([])
     const [loading, setLoading] = useState(false);
 
+
     useEffect(() => {
         const fetchAllPokemons = async () => {
             setLoading(true);
-            const listaPokemones = await fetchPokemons()
+            const listaPokemones = await fetchPokemons(1, 50)
             setPokemons(listaPokemones);
             await waitFor(1000);
         }
@@ -25,12 +26,20 @@ export const GetPokemons = () => {
         fetchAllPokemons().then(() => setLoading(false))
     }, [])
 
-    if (loading || !pokemons) return <LoadingScreen />
+    //if (loading || !pokemons) return <LoadingScreen />
 
     // filtro de busqueda en el input
     const filteredPokemons = pokemons?.filter((pokemon) => {
         return pokemon.name.toLowerCase().match(query.toLowerCase())
     })
+
+    const handlePagination = async () => {
+        setLoading(true);
+        const listaPokemones = await fetchPokemons(pokemons.length, pokemons.length + 50);
+        setPokemons([...pokemons, ...listaPokemones]);
+        setLoading(false);
+
+    }
 
     return (
         <SafeAreaView className='mt-10'  >
@@ -45,7 +54,13 @@ export const GetPokemons = () => {
                         img={item.image}
                     />}
                 keyExtractor={item => item.id}
+                onEndReachedThreshold={0.5}
+                onEndReached={()=>{
+                    handlePagination();
+                    console.log('end reached');
+                }}
             />
+            {loading && <ActivityIndicator size="large" color="#3D3D3D" />}
         </SafeAreaView>
 
     )
