@@ -7,15 +7,12 @@ export const SearchBar = ({ query, setQuery }) => {
     return (
         <Fragment>
             <TextInput 
-                className='h-10 rounded-md  mb-10 mt-5 bg-white'
+                className='h-10 rounded-md  mb-10 mt-5 bg-white mx-5 border  border-cyan-500 p-2'
                 type="text"
                 placeholder='Search a Pokemon'
                 value={query}
-                // onChangeText={(event) => setQuery(event.target.value)}
                 onChangeText={setQuery}
-                
             />
-            
         </Fragment>
     );
 };
