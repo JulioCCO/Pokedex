@@ -2,9 +2,10 @@ import 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
 
 
-import { StyleSheet } from 'react-native';
+
 import { BottomNav } from './components/BottomNav/BottomNav';
 import { SingIn } from './components/SingIn/SingIn';
+import { Pokeview } from './views/Pokeview/Pokeview';
 import { NavigationContainer } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
