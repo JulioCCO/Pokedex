@@ -10,16 +10,6 @@ export async function fetchPokemon(pokeName) {
     const results = await response.json();
     const moveslist = [];
 
-    // results.moves.map(async (move) => {
-    //     const resp = await fetchMoves(move.move.url);
-    //     moveslist.push({
-    //         name: resp.name,
-    //         accuracy: resp.accuracy,
-    //         power: resp.power,
-    //         pp: resp.pp,
-    //     });
-    // })
-
     const pokeInfo = {
         name: results.name,
         abilities: results.abilities,

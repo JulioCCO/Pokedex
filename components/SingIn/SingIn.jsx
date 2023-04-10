@@ -3,7 +3,7 @@
 import React from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 /**
@@ -13,6 +13,8 @@ import { useNavigation } from '@react-navigation/native';
  */
 
 WebBrowser.maybeCompleteAuthSession();
+
+const image = require('../../assets/BGDesign.png');
 
 export const SingIn = () => {
     const navigation = useNavigation();
@@ -43,20 +45,22 @@ export const SingIn = () => {
     }
 
     return (
-        <View style={styles.container} >
-            {user === null &&
-                <>
-                    <Text style={{ fontSize: 30, fontWeight: 'bold', marginBottom: 20 }}>Sign In</Text>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 20 }}>Please sign in to continue</Text>
-                    <TouchableOpacity
-                        disabled={!request}
-                        onPress={() => {
-                            promptAsync();
-                        }}>
-                        <Image source={require('../../assets/google.png')} style={{ width: 200, height: 50, marginBottom: 20 }} />
-                    </TouchableOpacity>
-                </>
-            }
+        <View style={styles.container}>
+            <ImageBackground style={styles.ImageBackground} source={image} resizeMode="cover" >
+                {user === null &&
+                    <>
+                        <Text style={{ fontSize: 30, fontWeight: 'bold', marginBottom: 20 }}>Sign In</Text>
+                        <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 20 }}>Please sign in to continue</Text>
+                        <TouchableOpacity
+                            disabled={!request}
+                            onPress={() => {
+                                promptAsync();
+                            }}>
+                            <Image source={require('../../assets/google.png')} style={{ width: 200, height: 50, marginBottom: 20, borderColor: 'black' }} />
+                        </TouchableOpacity>
+                    </>
+                }
+            </ImageBackground>
         </View>
     )
 };
@@ -64,8 +68,13 @@ export const SingIn = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+    },
+    ImageBackground: {
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        width: '100%',
+        height: '100%',
+        
     },
 });
