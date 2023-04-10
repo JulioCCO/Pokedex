@@ -57,7 +57,6 @@ export const GetPokemons = () => {
                 onEndReachedThreshold={0.5}
                 onEndReached={()=>{
                     handlePagination();
-                    console.log('end reached');
                 }}
             />
             {loading && <ActivityIndicator size="large" color="#3D3D3D" />}

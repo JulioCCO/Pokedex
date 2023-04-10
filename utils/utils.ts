@@ -50,3 +50,9 @@ export function waitFor(time: number): Promise<void> {
 export function capitalizeFirstLetter(string:string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+export function transformObjectToList(spriteObject:any){
+  let list = []
+  list.push(spriteObject["front_default"], spriteObject["front_shiny"], spriteObject["back_default"], spriteObject["back_shiny"])
+  return list
+}
