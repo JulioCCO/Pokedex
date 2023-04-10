@@ -2,7 +2,7 @@
   "expo": {
     "owner": "juliocco93",
     "name": "Pokedex-Mobile",
-    "slug": "Pokedex-Mobile",
+    "slug": "PokedexMobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -17,10 +17,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.example.Pokedex-Mobile"
+      "bundleIdentifier": "com.example.PokedexMobile"
     },
     "android": {
-      "package": "com.example.Pokedex-Mobile",
+      "package": "com.example.PokedexMobile",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"

@@ -15,9 +15,9 @@ import { useNavigation } from '@react-navigation/native';
 WebBrowser.maybeCompleteAuthSession();
 
 export const SingIn = () => {
-    const navigation = useNavigation<any>();
-    const [accessToken, setAccessToken] = React.useState<string | null>(null);
-    const [user, setUser] = React.useState<any>(null);
+    const navigation = useNavigation();
+    const [accessToken, setAccessToken] = React.useState(null);
+    const [user, setUser] = React.useState(null);
     const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
         clientId: '701681194274-27kc5anlhmcm2gjs9lelqq77hn4kfmnk.apps.googleusercontent.com',
         iosClientId: '701681194274-2vljra5omfap83rg76skf7rehpui6hoi.apps.googleusercontent.com',
@@ -29,10 +29,11 @@ export const SingIn = () => {
             const { id_token } = response.params;
             setAccessToken(id_token);
             accessToken && fetchUserInformation();
-            navigation.navigate('BottomNav');
+            navigation.navigate('BottomNav')
         }
     }, [response, accessToken]);
 
+    // no es necesaria
     async function fetchUserInformation() {
         let response = await fetch('https://www.googleapis.com/userinfo/v2/me', {
             headers: { Authorization: `Bearer ${accessToken}` },
@@ -41,22 +42,8 @@ export const SingIn = () => {
         setUser(userInfo);
     }
 
-    const ShowUserInfo = () => {
-        if (user) {
-            return (
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 35, fontWeight: 'bold', marginBottom: 20 }}>Welcome</Text>
-                    <Image source={{ uri: user?.picture }} style={{ width: 200, height: 200, borderRadius: 100, marginBottom: 20 }} />
-                    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{user?.name}</Text>
-                </View>
-            )
-        }
-        return null;
-    }
-
     return (
         <View style={styles.container} >
-            {user && <ShowUserInfo />}
             {user === null &&
                 <>
                     <Text style={{ fontSize: 30, fontWeight: 'bold', marginBottom: 20 }}>Sign In</Text>
@@ -71,7 +58,6 @@ export const SingIn = () => {
                 </>
             }
         </View>
-
     )
 };
 

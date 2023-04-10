@@ -1,7 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Pokedex } from '../../views/Pokedex/Pokedex';
 import { Trivia } from '../../views/Trivia/Trivia';
-import { SafeAreaView } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
