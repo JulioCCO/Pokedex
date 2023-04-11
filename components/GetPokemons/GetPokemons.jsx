@@ -42,13 +42,13 @@ export const GetPokemons = () => {
     }
 
     return (
-        <SafeAreaView className='mt-10'  >
+        <SafeAreaView className='mt-10'>
             <SearchBar query={query} setQuery={setQuery} />
             <FlatList
                 data={filteredPokemons.length > 0 ? filteredPokemons : pokemons}
                 numColumns={2}
                 renderItem={({ item }) =>
-                    <Card
+                    <Card 
                         id={item.id}
                         name={item.name}
                         img={item.image}
@@ -57,7 +57,6 @@ export const GetPokemons = () => {
                 onEndReachedThreshold={0.5}
                 onEndReached={()=>{
                     handlePagination();
-                    console.log('end reached');
                 }}
             />
             {loading && <ActivityIndicator size="large" color="#3D3D3D" />}
