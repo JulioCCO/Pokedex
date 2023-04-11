@@ -1,27 +1,112 @@
-import React from 'react';
-import { Pressable, Text, View } from 'react-native';
-import { Image } from 'expo-image';
-import { capitalizeFirstLetter } from '../../utils/utils';
+import React, { useEffect, useRef, useState } from 'react';
+import { Pressable, Text, View, StyleSheet, Dimensions, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { FadeInImage } from '../FadeInImage/FadeInImage';
+import ImageColors from 'react-native-image-colors';
 
-export const Card = ({ id, img, name }) => {
+const windowWidth = Dimensions.get('window').width
+
+export const Card = ({ id, picture, name }) => {
+
+  const [bgColor, setBgColor] = useState('grey');
+  const isMounted = useRef(true);
   const navigation = useNavigation();
+
+  useEffect(() => {
+
+    ImageColors?.getColors(picture, { fallback: 'grey' })
+      .then(colors => {
+
+        if (!isMounted.current) return;
+
+        (colors.platform === 'android')
+          ? setBgColor(colors.dominant || 'grey')
+          : setBgColor(colors.background || 'grey')
+
+      });
+
+    return () => {
+      isMounted.current = false
+    }
+
+  }, [])
+
   return (
-    <Pressable onPress={() => {
-      console.log(`PRESSED ${name}`)
-      navigation.navigate('BottomNav', {
-        screen: 'Pokeview',
-        params: { id, name }
-      })
-    }} className='rounded-md w-40 h-44 bg-white border border-cyan-500 m-4 flex-col'>
-      <View className='flex bg-slate-700 grow'>
-        <Image className='w-24 h-24 mx-auto mt-2 '
-          source={img} />
-      </View>
-      <View className='flex bg-red-600 mx-' >
-        <Text className='font-bold'>{capitalizeFirstLetter(name)}</Text>
-        <Text className='font-bold'>{id}</Text>
+    <Pressable
+      onPress={() => {
+        navigation.navigate('BottomNav', {
+          screen: 'Pokeview',
+          color: bgColor,
+          params: { id, name }
+        })
+      }} >
+      <View style={{
+        ...styles.cardContainer,
+        width: windowWidth * 0.4,
+        backgroundColor: bgColor
+      }}>
+        <FadeInImage
+          uri={picture}
+          style={styles.pokemonImage}
+        />
+        <View>
+          <Text style={styles.name}>
+            {name}
+            {'\n#' + id}
+          </Text>
+        </View>
       </View>
     </Pressable >
   )
 }
+
+const styles = StyleSheet.create({
+  cardContainer: {
+    marginHorizontal: 10,
+    // backgroundColor: 'grey',
+    height: 120,
+    width: 160,
+    marginBottom: 25,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+
+  },
+  name: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+    top: 20,
+    left: 10
+  },
+  pokebola: {
+    width: 100,
+    height: 100,
+    position: 'absolute',
+    right: -25,
+    bottom: -25
+  },
+  pokemonImage: {
+    width: 120,
+    height: 120,
+    position: 'absolute',
+    right: -8,
+    bottom: -5
+  },
+  pokebolaContainer: {
+    width: 100,
+    height: 100,
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    overflow: 'hidden',
+    opacity: 0.5
+  }
+});

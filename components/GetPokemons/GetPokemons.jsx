@@ -1,67 +1,45 @@
 
-import React, { useState, useEffect } from 'react';
-import { fetchPokemons } from '../../api/fetchPokemons';
+import React, { useState } from 'react';
 import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { Card } from '../../components/Card/Card';
-import { LoadingScreen } from '../../components/LoadingScreen/LoadingScreen';
-import { waitFor } from '../../utils/utils';
 import { FlatList } from 'react-native-gesture-handler';
 import { ActivityIndicator, SafeAreaView } from 'react-native';
+import { usePokemonPaginated } from '../../Customhooks/usePokemonPaginated'
 
 export const GetPokemons = () => {
 
+    const { simplePokemonList, loadPokemons } = usePokemonPaginated();
     const [query, setQuery] = useState('');
-    const [pokemons, setPokemons] = useState([])
-    const [loading, setLoading] = useState(false);
-
-
-    useEffect(() => {
-        const fetchAllPokemons = async () => {
-            setLoading(true);
-            const listaPokemones = await fetchPokemons(1, 50)
-            setPokemons(listaPokemones);
-            await waitFor(1000);
-        }
-        // call the function
-        fetchAllPokemons().then(() => setLoading(false))
-    }, [])
-
-    //if (loading || !pokemons) return <LoadingScreen />
 
     // filtro de busqueda en el input
-    const filteredPokemons = pokemons?.filter((pokemon) => {
-        return pokemon.name.toLowerCase().match(query.toLowerCase())
+    const filteredPokemons = simplePokemonList?.filter((pokemon) => {
+        return pokemon?.name.toLowerCase().match(query.toLowerCase())
     })
 
-    const handlePagination = async () => {
-        setLoading(true);
-        const listaPokemones = await fetchPokemons(pokemons.length, pokemons.length + 50);
-        setPokemons([...pokemons, ...listaPokemones]);
-        setLoading(false);
-
-    }
-
     return (
-        <SafeAreaView className='mt-10'>
+        <SafeAreaView className='mt-10 items-center'>
             <SearchBar query={query} setQuery={setQuery} />
             <FlatList
-                data={filteredPokemons.length > 0 ? filteredPokemons : pokemons}
+                data={simplePokemonList ? filteredPokemons : []}
                 numColumns={2}
                 renderItem={({ item }) =>
-                    <Card 
+                    <Card
                         id={item.id}
                         name={item.name}
-                        img={item.image}
+                        picture={item.picture}
                     />}
                 keyExtractor={item => item.id}
+                onEndReached={loadPokemons}
                 onEndReachedThreshold={0.5}
-                onEndReached={()=>{
-                    handlePagination();
-                }}
+                ListFooterComponent={(
+                    <ActivityIndicator
+                        style={{ height: 100 }}
+                        size={'large'}
+                        color="grey"
+                    />
+                )}
             />
-            {loading && <ActivityIndicator size="large" color="#3D3D3D" />}
         </SafeAreaView>
-
     )
 }
 

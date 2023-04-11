@@ -49,15 +49,16 @@ export const SingIn = () => {
             <ImageBackground style={styles.ImageBackground} source={image} resizeMode="cover" >
                 {user === null &&
                     <>
-                        <Text style={{ fontSize: 30, fontWeight: 'bold', marginBottom: 20 }}>Sign In</Text>
-                        <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 20 }}>Please sign in to continue</Text>
+                        <Text style={{ fontSize: 40, fontWeight: 'bold', marginBottom: 20, color: '#E84236'}}>Sign In</Text>
                         <TouchableOpacity
                             disabled={!request}
                             onPress={() => {
                                 promptAsync();
                             }}>
-                            <Image source={require('../../assets/google.png')} style={{ width: 200, height: 50, marginBottom: 20, borderColor: 'black' }} />
+                            <Image className=' border rounded-full' source={require('../../assets/masterBall.png')} style={{ width: 100, height: 104, marginBottom: 10 }} />
                         </TouchableOpacity>
+                        
+                        <Text style={{ fontSize: 15, fontWeight: 'bold', marginBottom: 20 }}>Touch the Masterball to enter</Text>
                     </>
                 }
             </ImageBackground>

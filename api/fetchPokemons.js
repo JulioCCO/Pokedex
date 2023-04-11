@@ -16,9 +16,7 @@ export async function fetchPokemons(currentPoke = 1, nextPoke = 100) {
         pokemons.push({
             name: results.name,
             id: results.id,
-            image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${index}.gif`,
-            types: results.types,
-            abilities: results.abilities,
+            image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${results.id}.png`,
         })
 
     };
