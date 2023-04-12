@@ -3,11 +3,13 @@ import React, { useState } from 'react';
 import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { Card } from '../../components/Card/Card';
 import { FlatList } from 'react-native-gesture-handler';
-import { ActivityIndicator, SafeAreaView } from 'react-native';
-import { usePokemonPaginated } from '../../Customhooks/usePokemonPaginated'
+import { ActivityIndicator, SafeAreaView, Text } from 'react-native';
+import { usePokemonPaginated } from '../../Customhooks/usePokemonPaginated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 
 export const GetPokemons = () => {
-
+    const { top } = useSafeAreaInsets();
     const { simplePokemonList, loadPokemons } = usePokemonPaginated();
     const [query, setQuery] = useState('');
 
@@ -18,9 +20,18 @@ export const GetPokemons = () => {
 
     return (
         <SafeAreaView className='mt-10 items-center'>
+            <Text style={{
+                top: top-20,
+                fontSize: 30,
+                fontWeight: 'bold',
+                paddingBottom: 0,
+                textAlign: 'center',
+                color: 'white',
+            }}>Pokedex </Text>
             <SearchBar query={query} setQuery={setQuery} />
             <FlatList
                 data={simplePokemonList ? filteredPokemons : []}
+                showsVerticalScrollIndicator={false}
                 numColumns={2}
                 renderItem={({ item }) =>
                     <Card

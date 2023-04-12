@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Pressable, Text, View, StyleSheet, Dimensions } from 'react-native';
+import { Pressable, Text, View, StyleSheet, Dimensions, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { FadeInImage } from '../FadeInImage/FadeInImage';
 import { fetchPokemonType } from '../../api/fetchPokemonTypes';
@@ -7,18 +7,19 @@ import { color } from '../../utils/utils';
 
 const windowWidth = Dimensions.get('window').width
 
-
 export const Card = ({ id, picture, name }) => {
 
-  const [type, setType] = useState();
+   const [type, setType] = useState([]);
   const navigation = useNavigation();
-
   useEffect(() => {
     (async () => {
-      await fetchPokemonType(name).then((res) => {
-        setType(res.types[0].type.name)
-      })
-    })()
+      await fetchPokemonType(id).then((res) => {
+        setType(res)
+        }).catch((err) => {
+          setType([{"slot": 1, "type": {"name": "normal", "url": "https://pokeapi.co/api/v2/type/10/"}}])
+          console.log(err)
+        })
+    })();
   }, [])
 
   return (
@@ -26,23 +27,29 @@ export const Card = ({ id, picture, name }) => {
       onPress={() => {
         navigation.navigate('BottomNav', {
           screen: 'Pokeview',
-          color: color(type?.name),
           params: { id, name }
         })
-      }} >
+      }}
+    >
       <View style={{
         ...styles.cardContainer,
         width: windowWidth * 0.4,
-        backgroundColor: color(type)
+        backgroundColor: color(type[0]?.type?.name),
       }}>
-        <FadeInImage
-          uri={picture}
-          style={styles.pokemonImage}
-        />
         <Text style={styles.name}>
           {name}
           {'\n#' + id}
         </Text>
+        <View style={styles.pokebolaContainer}>
+          <Image
+            source={require('../../assets/pokebola-blanca.png')}
+            style={styles.pokebola}
+          />
+        </View>
+        <FadeInImage
+          uri={picture}
+          style={styles.pokemonImage}
+        />
       </View>
     </Pressable >
   )
@@ -51,7 +58,6 @@ export const Card = ({ id, picture, name }) => {
 const styles = StyleSheet.create({
   cardContainer: {
     marginHorizontal: 10,
-    // backgroundColor: 'grey',
     height: 120,
     width: 160,
     marginBottom: 25,
@@ -78,8 +84,10 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     position: 'absolute',
-    right: -25,
-    bottom: -25
+    right: -10,
+    bottom: -20,
+    opacity: 0.5
+
   },
   pokemonImage: {
     width: 120,

@@ -9,8 +9,6 @@ export async function fetchPokemon(pokeName) {
     }
     const results = await response.json();
     
-    const moveslist = [];
-
     const pokeInfo = {
         name: results.name,
         id: results.id,

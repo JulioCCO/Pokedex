@@ -4,7 +4,7 @@ import { View } from 'react-native'
 import { GetPokemons } from '../../components/GetPokemons/GetPokemons'
 import { ImageBackground, StyleSheet, Text } from 'react-native';
 
-const image = require('../../assets/BGDesign.png');
+const image = require('../../assets/Group2.png');
 
 export const Pokedex = () => {
   return (

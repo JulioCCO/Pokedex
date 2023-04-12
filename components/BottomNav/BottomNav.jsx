@@ -24,7 +24,9 @@ export function BottomNav() {
             source={qmark}
             style={{ width: 30, height: 30 }}
           />
-        )}} component={Trivia} params={{flag:true}} />
+        )}} component={Trivia} 
+            
+        />
 
         <Tab.Screen name="Pokeview" options={{
                 tabBarButton: () => null,
