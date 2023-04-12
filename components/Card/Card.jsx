@@ -1,34 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Pressable, Text, View, StyleSheet, Dimensions, Image } from 'react-native';
+import { Pressable, Text, View, StyleSheet, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { FadeInImage } from '../FadeInImage/FadeInImage';
-import ImageColors from 'react-native-image-colors';
+import { fetchPokemonType } from '../../api/fetchPokemonTypes';
+import { color } from '../../utils/utils';
 
 const windowWidth = Dimensions.get('window').width
 
+
 export const Card = ({ id, picture, name }) => {
 
-  const [bgColor, setBgColor] = useState('grey');
-  const isMounted = useRef(true);
+  const [type, setType] = useState();
   const navigation = useNavigation();
 
   useEffect(() => {
-
-    ImageColors?.getColors(picture, { fallback: 'grey' })
-      .then(colors => {
-
-        if (!isMounted.current) return;
-
-        (colors.platform === 'android')
-          ? setBgColor(colors.dominant || 'grey')
-          : setBgColor(colors.background || 'grey')
-
-      });
-
-    return () => {
-      isMounted.current = false
-    }
-
+    (async () => {
+      await fetchPokemonType(name).then((res) => {
+        setType(res.types[0].type.name)
+      })
+    })()
   }, [])
 
   return (
@@ -36,25 +26,23 @@ export const Card = ({ id, picture, name }) => {
       onPress={() => {
         navigation.navigate('BottomNav', {
           screen: 'Pokeview',
-          color: bgColor,
+          color: color(type?.name),
           params: { id, name }
         })
       }} >
       <View style={{
         ...styles.cardContainer,
         width: windowWidth * 0.4,
-        backgroundColor: bgColor
+        backgroundColor: color(type)
       }}>
         <FadeInImage
           uri={picture}
           style={styles.pokemonImage}
         />
-        <View>
-          <Text style={styles.name}>
-            {name}
-            {'\n#' + id}
-          </Text>
-        </View>
+        <Text style={styles.name}>
+          {name}
+          {'\n#' + id}
+        </Text>
       </View>
     </Pressable >
   )
@@ -83,8 +71,8 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
     fontWeight: 'bold',
-    top: 20,
-    left: 10
+    top: 0,
+    left: 6
   },
   pokebola: {
     width: 100,
