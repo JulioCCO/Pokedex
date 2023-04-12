@@ -4,19 +4,22 @@ import { fetchEnemy, fetchRandPokemons } from '../../api/fetchRandomPokemon';
 import { fetchPokemons } from '../../api/fetchPokemons';
 import { TouchableOpacity, View,Text,ActivityIndicator } from 'react-native';
 
-export const Trivia = () => {
+export const Trivia = ({props}) => {
   const [flag, setFlag] = useState(false);
   const [pokeList, setPokeList] = useState({lista: [], random: 0});
-
+  const [cont, setCont] = useState(0);
   const [Loading, setLoading] = useState(false)
 
 
   const verifyAnswer = (answer) => { 
-    if(answer === pokeList.random.name)
+    if(answer === pokeList.random.name){
       console.log('Correcto');
-      
-    else
+      setCont(cont + 1);
+    }
+    else{
       console.log('Incorrecto');
+      setCont(0);
+    }
     setFlag(true);
   }
 
@@ -30,20 +33,20 @@ export const Trivia = () => {
       setLoading(false);
     })();
     
-  },[flag]);
+  },[flag,props]);
   useEffect(() => {
     console.log(pokeList + "lista");
     console.log(pokeList.random + "random");
     console.log("useEffect")
   },[pokeList]);
-    
+    // TODO: DESPLGEGAR UNA ALERTA CUANDO LA RESPUESTA SEA CORRECTA O INCORRECTA, ASIGNAR UN CONTADOR DE RACHA, 
   return (
     Loading ? <ActivityIndicator className='flex self-center h-full w-full bg-slate-600' size="large" color="white"/> : (
         <View> 
            
             <Text>Trivia</Text>
             <Text>¿Quién es este Pokémon?</Text>
-            <Image source={pokeList.random.official} style={{width: 200, height: 200}}/>
+            <Image source={pokeList.random.official} style={{width: 200, height: 200 ,tintColor:"black"} } />
             { pokeList.lista.map((pokemon) => {
               console.log(pokemon)  
               return (
@@ -53,6 +56,7 @@ export const Trivia = () => {
                 )
               })
             }
+            <Text>Contador de racha: {cont}</Text>
         </View>
     )
   )
