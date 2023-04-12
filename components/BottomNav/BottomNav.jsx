@@ -5,10 +5,12 @@ import pkball from '../../assets/pkball.webp';
 import qmark from '../../assets/qmark.webp';
 import { Image } from 'expo-image';
 import { Pokeview } from '../../views/Pokeview/Pokeview';
+import { useNavigation } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
 export function BottomNav() {
+  const naviagation = useNavigation();
   return (
     <Tab.Navigator>
         <Tab.Screen name="Pokedex" options={{headerShown:false,
@@ -19,7 +21,12 @@ export function BottomNav() {
           />
         )
         }} component={Pokedex} />
-        <Tab.Screen name="Trivia" options={{headerShown:false, tabBarIcon: () => (
+        <Tab.Screen name="Trivia" listeners={{
+          tabPress: e => {
+            naviagation.navigate("Trivia", {date: new Date()})
+           
+          }
+        }}  options={{headerShown:false, tabBarIcon: () => (
           <Image
             source={qmark}
             style={{ width: 30, height: 30 }}

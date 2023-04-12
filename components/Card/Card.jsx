@@ -17,7 +17,6 @@ export const Card = ({ id, picture, name }) => {
         setType(res)
         }).catch((err) => {
           setType([{"slot": 1, "type": {"name": "normal", "url": "https://pokeapi.co/api/v2/type/10/"}}])
-          console.log(err)
         })
     })();
   }, [])
