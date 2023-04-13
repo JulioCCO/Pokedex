@@ -16,11 +16,12 @@ export const Trivia = ({route}) => {
       showToast("Respuesta correcta!");
     }
     else{
-      setCont(0);
+      setCont(cont -1);
       showToast("Respuesta incorrecta!");
     }
     setFlag(true);
   }
+
   useEffect(  () => { 
       
      (async () => {
@@ -61,7 +62,10 @@ export const Trivia = ({route}) => {
             <FlatList 
               data={pokeList.lista}
               renderItem={({item}) => (
-                <TouchableOpacity className='border rounded-sm m-5 w-40 h-12 flex items-center justify-center bg-slate-50' style={{backgroundColor: (item.name === pokeList.random.name && flag ? '#3fe93f': 'white')}} key={item.name} onPress={() => verifyAnswer(item.name)}>
+                <TouchableOpacity className='border rounded-sm m-5 w-40 h-12 flex items-center justify-center bg-slate-50' 
+                style={{backgroundColor: (item.name === pokeList.random.name && flag ? '#3fe93f': 'white')}} 
+                key={item.name} 
+                onPress={() => verifyAnswer(item.name) }>
                   <Text className='p-2 font-semibold text-sm'>{capitalizeFirstLetter(item.name)}</Text>
                 </TouchableOpacity>
               )}

@@ -3,7 +3,7 @@
 import React from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
-import { View, Text, Image, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, ImageBackground, Animated } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 /**
@@ -51,11 +51,12 @@ export const SingIn = () => {
                     <>
                         <Text style={{ fontSize: 40, fontWeight: 'bold', marginBottom: 20, color: '#E84236'}}>Sign In</Text>
                         <TouchableOpacity
+                            style={{ width: 170, height: 80, marginBottom: 10,flex:1/4 }}
                             disabled={!request}
                             onPress={() => {
                                 promptAsync();
                             }}>
-                            <Image className=' border rounded-full' source={require('../../assets/masterBall.png')} style={{ width: 100, height: 104, marginBottom: 10 }} />
+                            <Animated.Image source={require('../../assets/masterBall.png')} style={{ width: '100%', height: '100%', marginBottom: 10 }} />
                         </TouchableOpacity>
                         
                         <Text style={{ fontSize: 15, fontWeight: 'bold', marginBottom: 20 }}>Touch the Masterball to enter</Text>
@@ -69,6 +70,7 @@ export const SingIn = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: 'red',
     },
     ImageBackground: {
         flex: 1,
