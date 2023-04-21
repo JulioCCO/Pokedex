@@ -7,6 +7,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "scheme": "com.example.PokedexMobile",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -16,7 +17,7 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": true, 
       "bundleIdentifier": "com.example.PokedexMobile"
     },
     "android": {
@@ -31,7 +32,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "1d9a4eb0-2271-4215-8b50-af622a72bb74"
+        "projectId": "f9bb65dd-7290-4be3-b536-db349ab46d3e"
       }
     }
   }
